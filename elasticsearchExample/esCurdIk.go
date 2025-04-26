@@ -28,31 +28,48 @@ type Document struct {
 
 func main() {
 	es, err := elasticsearch.NewClient(elasticsearch.Config{
-		Addresses: []string{"http://127.0.0.1:9200"}, // 替换为您的 Elasticsearch 地址
+		Addresses: []string{"http://192.168.134.128:9200"}, // 替换为您的 Elasticsearch 地址
 	})
 	if err != nil {
 		log.Fatalf("Error creating the client: %s", err)
 	}
-	document := map[string]interface{}{
-		"user":    "john_doe",
-		"message": "Hello, Elasticsearch!",
-	}
+	//document := map[string]interface{}{
+	//	"user":    "宏渊季",
+	//	"message": "Hello, Elasticsearch!",
+	//}
+	//
+	//jsonData, err := json.Marshal(document)
+	//if err != nil {
+	//	log.Fatalf("Error marshaling document: %s", err)
+	//}
+	//createIndex(es)
+	//indexDocument(es, "test_index", "texto1", string(jsonData))
 
-	jsonData, err := json.Marshal(document)
-	if err != nil {
-		log.Fatalf("Error marshaling document: %s", err)
+	//query := `{
+	//	"query": {
+	//		"match": {
+	//			"user": "Elasticsearch"
+	//		}
+	//	}
+	//}`
+	// 构造查询体（包含高亮部分）
+	q := map[string]interface{}{
+		"query": map[string]interface{}{
+			"match": map[string]interface{}{
+				"user": "宏",
+			},
+		},
+		"highlight": map[string]interface{}{
+			"pre_tags":  []string{"<span style='color:red;'>"},
+			"post_tags": []string{"</span>"},
+			"fields": map[string]interface{}{
+				"user": map[string]interface{}{},
+			},
+		},
 	}
-	createIndex(es)
-	indexDocument(es, "test_index", "texto1", string(jsonData))
+	body, _ := json.Marshal(q)
 
-	query := `{
-		"query": {
-			"match": {
-				"user": "Elasticsearch"
-			}
-		}
-	}`
-	searchDocuments(es, "doe", query)
+	searchDocuments(es, "test_index", string(body))
 }
 
 // 创建文档
