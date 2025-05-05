@@ -1,0 +1,5 @@
+2025-05-05T10:07:56.640+0800	DEBUG	zapExample/zapUseExample.go:90	调试信息	{"service": "startup", "version": 1}
+2025-05-05T10:07:56.658+0800	INFO	zapExample/zapUseExample.go:95	服务初始化完成	{"environment": "production"}
+2025-05-05T10:07:56.658+0800	WARN	zapExample/zapUseExample.go:99	数据库连接池接近限制	{"current_connections": 95, "max_connections": 100}
+2025-05-05T10:07:56.658+0800	INFO	zapExample/zapUseExample.go:106	订单处理	{"orderID": 12345, "amount": 199.99, "currency": "USD"}
+2025-05-05T10:07:56.658+0800	INFO	zapExample/zapUseExample.go:114	启动HTTP服务	{"addr": ":8080"}
